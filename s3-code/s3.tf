@@ -1,5 +1,7 @@
+variable "region" {}
+
 provider "aws" {
-  region = "us-east-1"
+  region = "${var.region}"
 }
 
 resource "aws_s3_bucket" "bucket_one" {
@@ -9,8 +11,17 @@ resource "aws_s3_bucket" "bucket_one" {
     tags {
       Name = "ssp bucket"
       Environment = "Dev"
+      Team = "SSPCLOUDPRO"
     }
 }
+
+// Output the ID of the Subnet Group
+output "s3 bucket name" {
+    value = "${aws_s3_bucket.bucket_one.id}"
+}
+
+
+
 
 #data "terraform_remote_state" "store_tf_state" {
 #  backend = "s3"
